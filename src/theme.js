@@ -146,7 +146,7 @@ export const themeSettings = ( mode ) => {
                     main: colors.primary[100]
                 },
                 secondary:{
-                    main: colors.greenAccent[00]
+                    main: colors.greenAccent[500]
                 },
                 neutral: {
                     dark: colors.grey[700],
@@ -158,6 +158,53 @@ export const themeSettings = ( mode ) => {
                     
                 }
             })
+        },
+        typography: {
+            fontFamily: ['Souce Sans Pro', 'sans-serif'].join(","),
+            fontSize: 12,
+            h1: {
+                fontFamily: ['Souce Sans Pro', 'sans-serif'].join(","),
+                fontSize: 40
+            },
+            h2: {
+                fontFamily: ['Souce Sans Pro', 'sans-serif'].join(","),
+                fontSize: 32
+            },
+            h3: {
+                fontFamily: ['Souce Sans Pro', 'sans-serif'].join(","),
+                fontSize: 24
+            },
+            h4: {
+                fontFamily: ['Souce Sans Pro', 'sans-serif'].join(","),
+                fontSize: 20
+            },
+            h5: {
+                fontFamily: ['Souce Sans Pro', 'sans-serif'].join(","),
+                fontSize: 16
+            },
+            h6: {
+                fontFamily: ['Souce Sans Pro', 'sans-serif'].join(","),
+                fontSize: 14
+            },
         }
-    })
+    }) 
+};
+
+export const ColorModeContext = createContext({
+    toggleColorMode: () => {}
+});
+
+export const useMode = () => {
+
+    const [mode, setMode] = useState("dark");
+
+    const colorMode = useMemo(
+        () => ({
+            toggleColorMode: () => setMode((prev)=>( prev === "light" ? "dark" : "light" ))
+        }),
+        []
+    );
+    const theme = useMemo(()=> createTheme(themeSettings(mode),[mode]));
+
+    return [theme, colorMode];
 }
